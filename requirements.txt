@@ -1,0 +1,12 @@
+fastapi
+pdfplumber
+uvicorn
+numpy
+transformers
+torch
+pydantic
+paddlepaddle==2.6.2
+paddleocr==2.8.1
+PyMuPDF
+torchvision
+timm
