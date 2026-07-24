@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from fastapi import HTTPException
 
-from schemas.pdf_request import PDFRequest
-from services.pdf_extraction_service import extract_pdf
+from app.schemas.pdf_request import PDFRequest
+from app.services.pdf_extraction_service import extract_pdf
 
 router = APIRouter()
 
