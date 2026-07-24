@@ -53,3 +53,21 @@ class JSONExporter:
         with open(path,"w",encoding="utf-8") as f:
 
             json.dump(data,f,indent=4,ensure_ascii=False)
+            
+            
+            
+        """
+        it returns
+        [
+    {
+        "Date": "01/01/24",
+        "Description": "ATM Withdrawal",
+        "Amount": "500"
+    },
+    {
+        "Date": "02/01/24",
+        "Description": "UPI Payment",
+        "Amount": "1000"
+    }
+    ]
+    """

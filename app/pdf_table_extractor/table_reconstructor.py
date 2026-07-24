@@ -8,7 +8,7 @@ class TableReconstructor:
     def build_table(self, words):
  
         rows = []
-        #Sort words top → bottom
+        #Sort words top → bottom  using center of y values
         words = sorted(
             words,
             key=lambda x: self.center_y(
@@ -36,3 +36,27 @@ class TableReconstructor:
                 rows.append({"y": y,"cells": [word]})
  
         return rows
+    
+    
+    
+    """
+    it returns
+    [
+    {
+        "y": 210,
+        "cells": [
+            {"text": "01/01/24"},
+            {"text": "ATM"},
+            {"text": "500"}
+        ]
+    },
+    {
+        "y": 250,
+        "cells": [
+            {"text": "02/01/24"},
+            {"text": "UPI"},
+            {"text": "1000"}
+        ]
+    }
+]
+"""

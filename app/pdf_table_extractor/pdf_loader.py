@@ -17,7 +17,11 @@ class PDFLoader:
         for page in doc:
             #enlarge pages before converting into images
             mat = fitz.Matrix(self.dpi / 72,self.dpi / 72)
-            #convert pdf pages into images
+            
+            """convert pdf pages into images
+            get_pixmap() is the function that renders a PDF page into an image.
+            in pix it stores the image width,height,number of colour channels,pixel data,resolution"""
+            
             pix = page.get_pixmap(matrix=mat,alpha=False)
             #convert raw bytes to numpy array
             img = np.frombuffer(pix.samples,dtype=np.uint8)

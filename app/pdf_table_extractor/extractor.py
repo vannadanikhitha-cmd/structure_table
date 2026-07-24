@@ -1,22 +1,22 @@
 import cv2
 
-from pdf_table_extractor.pdf_loader import (
+from app.pdf_table_extractor.pdf_loader import (
     PDFLoader
 )
 
-from pdf_table_extractor.table_detector import (
+from app.pdf_table_extractor.table_detector import (
     TableDetector
 )
 
-from pdf_table_extractor.ocr_engine import (
+from app.pdf_table_extractor.ocr_engine import (
     OCREngine
     )
 
-from pdf_table_extractor.table_reconstructor import (
+from app.pdf_table_extractor.table_reconstructor import (
   TableReconstructor
 )
 
-from pdf_table_extractor.json_exporter import (
+from app.pdf_table_extractor.json_exporter import (
     JSONExporter
 )
 
