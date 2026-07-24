@@ -1,41 +1,17 @@
 import pdfplumber
 
-from helpers.text_cleaner import clean_text
-
-from extractors.key_value_extractor import (
-    extract_kv_from_line
-)
-
-from extractors.transaction_extractor import (
-    extract_transactions
-)
+from app.helpers.text_cleaner import clean_text
+from app.extractors.key_value_extractor import extract_kv_from_line
+from app.extractors.transaction_extractor import extract_transactions
 
 
 def process_pdf(pdf_path):
 
-    """
-    Returns
-
-    table_data -> Structured transactions
-
-    outside_data -> Header / footer key-values
-    """
-
     outside_data = {}
 
-    # ----------------------------
-    # Structured transaction extraction
-    # ----------------------------
-
-    table_data = extract_transactions(
-        pdf_path
-    )
-
-    # ----------------------------
-    # Outside data extraction
-    # ----------------------------
-
     with pdfplumber.open(pdf_path) as pdf:
+
+        table_data = extract_transactions(pdf)
 
         for page in pdf.pages:
 
@@ -43,11 +19,7 @@ def process_pdf(pdf_path):
 
             tables = page.find_tables()
 
-            table_bbox = (
-                tables[0].bbox
-                if tables
-                else None
-            )
+            table_bbox = tables[0].bbox if tables else None
 
             lines_map = {}
 
@@ -56,8 +28,6 @@ def process_pdf(pdf_path):
                 x0 = word["x0"]
                 x1 = word["x1"]
                 top = word["top"]
-
-                # Ignore table area
 
                 if table_bbox:
 
@@ -73,40 +43,19 @@ def process_pdf(pdf_path):
 
                 key = round(top, 1)
 
-                if key not in lines_map:
+                lines_map.setdefault(key, []).append((x0, word["text"]))
 
-                    lines_map[key] = []
+            for _, line_words in sorted(lines_map.items()):
 
-                lines_map[key].append(
-                    (
-                        x0,
-                        word["text"]
-                    )
-                )
+                line_words.sort(key=lambda x: x[0])
 
-            # rebuild text
-
-            for _, line_words in sorted(
-                lines_map.items()
-            ):
-
-                line_words.sort(
-                    key=lambda x: x[0]
-                )
-
-                line = " ".join(
-                    w[1]
-                    for w in line_words
-                )
+                line = " ".join(word for _, word in line_words)
 
                 line = clean_text(line)
 
-                key, value = extract_kv_from_line(
-                    line
-                )
+                key, value = extract_kv_from_line(line)
 
                 if key and value:
-
                     outside_data[key] = value
 
     return table_data, outside_data
