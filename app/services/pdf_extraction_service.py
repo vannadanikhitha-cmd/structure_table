@@ -4,11 +4,11 @@ import tempfile
 import traceback
 from fastapi import HTTPException
 
-from schemas.pdf_request import PDFRequest
+from app.schemas.pdf_request import PDFRequest
 
-from processors.hybrid_pdf_processor import process_hybrid_pdf
+from app.processors.hybrid_pdf_processor import process_hybrid_pdf
 
-from extractors.transaction_extractor import (
+from app.extractors.transaction_extractor import (
     extract_transactions
 )
 
